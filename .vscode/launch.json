@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Boot20220228Application",
+            "request": "launch",
+            "mainClass": "com.example.boot_20220228.Boot20220228Application",
+            "projectName": "boot_20220228"
+        }
+    ]
+}
