@@ -28,7 +28,7 @@
               <td th:text="${tmp.name}"></td>
               <td th:text="${tmp.age}"></td>
               <td>
-                <a href="#">수정</a>
+                <a th:href="@{/member/update(id=${tmp.id})}">수정</a>
                 <a th:href="@{/member/delete(id=${tmp.id})}">삭제</a>
 
                 <form th:action="@{/member/delete}" method="get">

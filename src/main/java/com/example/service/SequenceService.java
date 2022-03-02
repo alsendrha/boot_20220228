@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.Sequnce;
+import com.example.entity.Sequence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
@@ -19,19 +19,20 @@ public class SequenceService {
     @Autowired
     MongoTemplate mongoDB;
 
-    public long generatorSequnce(String seqName) {
+    public long generatorSequence(String seqName) {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(seqName));
 
         Update update = new Update();
-        update.inc("_id", 1);
+        update.inc("seq", 1);
 
         FindAndModifyOptions options = new FindAndModifyOptions();
         options.returnNew(true);
         options.upsert(true);
+        // upsert = 있으면 가져오고 없으면 만듬
 
-        Sequnce counter = mongoDB.findAndModify(query, update, options, Sequnce.class);
+        Sequence counter = mongoDB.findAndModify(query, update, options, Sequence.class);
 
         if (counter != null) {
             return counter.getSeq();

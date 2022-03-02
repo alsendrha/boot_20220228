@@ -13,35 +13,43 @@
     <div style="padding: 20px;">
         <h3>아이템목록</h3>
         <a href="/">홈으로</a>
+        <a href="/item/insert">물품등록</a>
         <hr />
       <table class="table">
           <tr>
               <th>번호</th>
+              <th>물품번호</th>
               <th>물품명</th>
-              <th>가격</th>
-              <th>수량</th>
+              <th>물품가격</th>
+              <th>물품수량</th>
               <th>등록일</th>
-
+              <th>이미지</th>
+              <th>버튼</th>
           </tr>
           <tr th:each="tmp, idx : ${list}">
+              <td th:text="${idx.count}"></td>
               <td th:text="${tmp.code}"></td>
               <td th:text="${tmp.name}"></td>
               <td th:text="${tmp.price}"></td>
               <td th:text="${tmp.quantity}"></td>
+              <td th:text="${tmp.regdate}"></td>
+              <td><img th:src="@{/item/image(code=${tmp.code})}" style="width: 50px;height: 50px;"></td>
               <td>
-                <a href="#">수정</a>
-                <a th:href="@{/item/delete(id=${tmp.code})}">삭제</a>
+                <a th:href="@{/item/update(code=${tmp.code})}">수정</a>
+                <a th:href="@{/item/delete(code=${tmp.code})}">삭제</a>
 
-                <form th:action="@{/item/delete}" method="get">
+                <!-- <form th:action="@{/item/delete}" method="get">
                     <input type="hidden" name="id" th:value="${tmp.code}"/>
                     <input type="submit" value="삭제1" />
-                </form>
-                
-                
+                </form> -->
             </td>
-             
           </tr>
       </table>
+
+      <th:block th:each="i : ${#numbers.sequence(1,pages)}">
+          <a th:href="@{/item/selectlist(page=${i})}" th:text="${i}"></a>
+      </th:block>
+
     </div>
 </body>
 </html>

@@ -15,20 +15,23 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@Document(collection = "item3")
+@Document(collection = "item4")
 public class Item {
     @Id
     private long code = 0L;
 
-    @Field(name = "itemname")
+    @Field(name = "name") // 만들고싶은 이름 똑같이 할땐 안써도됨
     private String name = null;
 
-    @Field(name = "itemprice")
     private long price = 0L;
 
-    @Field(name = "quantity")
     private long quantity = 0L;
 
-    @Field(name = "regdate")
+    // import java.util
     private Date regdate = null;
+
+    private byte[] filedata = null;
+    private String filetype = null;
+    private String filename = null;
+    private long filesize = 0L;
 }

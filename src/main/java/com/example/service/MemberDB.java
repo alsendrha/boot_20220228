@@ -20,4 +20,12 @@ public interface MemberDB {
     // 회원 1명 삭제(회원 아이디가 오면 삭제 후 -1 또는 1로 리턴)
     public int deleteMember(String id);
 
+    // 회원 1명 조회하기(아이디를 전달하면 회원 1명의 정보)
+    public Member selectOneMember(String id);
+
+    // 회원정보 변경하기
+    public int updateMember(Member member);
+
+    // 삭제, 수정, 추가 리턴은 int
+
 }

@@ -21,7 +21,7 @@
             암호 : <input type="password" name="pw" /><br />
             암호1 : <input type="password" name="pw1" /><br />
             이름 : <input type="text" name="name" /><br />
-            나이 : <input type="text" name="age" /><br />
+            나이 : <input type="number" name="age" /><br />
             <input type="submit" class=" btn btn-primary" value="회원가입" />
         </form>
     </div>

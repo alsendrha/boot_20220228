@@ -14,11 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-@Document(collection = "sequnce")
-public class Sequnce {
+@Document(collection = "sequence")
+public class Sequence {
 
     // _id
-    @Id
+    @Id // 필드이름 _id
     private String seqName = null;
 
     @Field(name = "seq")
