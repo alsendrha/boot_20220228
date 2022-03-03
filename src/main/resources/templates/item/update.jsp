@@ -13,12 +13,16 @@
     <div style="padding: 20px;">
         <h3>물품수정</h3>
         <hr />
-        <form th:action="@{/item/update}" method="post">
+        <form th:action="@{/item/update}" method="post" enctype="multipart/form-data">
             물품번호 : <input type="text" th:value="${item.code}" name="code" readonly><br />
-            물품명 : <input type="text" th:value="${item.name}" name="name" ><br />
+            물품명 : <input type="text" th:value="${item.name}" name="name"  ><br />
             물품가격 : <input type="text" th:value="${item.price}" name="price" ><br />
             물품수량 : <input type="text" th:value="${item.quantity}" name="quantity" ><br />
-            <input type="submit" value="수정하기" />
+            이미지 : <img th:src="@{/item/image(code=${item.code})}" style="width: 100px;" />
+            <input type="file" name="image" /><br />
+            <hr />
+            <input type="submit" class="btn btn-primary" value="수정하기" />
+            <a th:href="@{/item/selectlist}" class="btn btn-primary">물품목록</a>
         </form>
     </div>
 </body>

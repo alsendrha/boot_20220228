@@ -99,6 +99,7 @@ public class ItemDBImpl implements ItemDB {
 
             // projection
             query.fields().include("filedata", "filetype", "filesize");
+
             return mongoDB.findOne(query, Item.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,8 +112,7 @@ public class ItemDBImpl implements ItemDB {
     public Item selectOneItem(long code) {
         try {
             Query query = new Query();
-            Criteria criteria = Criteria.where("code").is(code);
-            query.addCriteria(criteria);
+            query.addCriteria(Criteria.where("_id").is(code));
 
             return mongoDB.findOne(query, Item.class);
 
@@ -127,13 +127,18 @@ public class ItemDBImpl implements ItemDB {
     public int updateItem(Item item) {
         try {
             Query query = new Query();
-            Criteria criteria = Criteria.where("_id").is(item.getCode());
-            query.addCriteria(criteria);
+            query.addCriteria(Criteria.where("_id").is(item.getCode()));
 
             Update update = new Update();
             update.set("name", item.getName());
             update.set("price", item.getPrice());
             update.set("quantity", item.getQuantity());
+            if (item.getFilesize() > 0) { // 파일 첨부되었다면
+                update.set("filedata", item.getFiledata());
+                update.set("filesize", item.getFilesize());
+                update.set("filetype", item.getFiletype());
+                update.set("filename", item.getFilename());
+            }
 
             UpdateResult result = mongoDB.updateFirst(query, update, Item.class);
             if (result.getModifiedCount() == 1L) {
@@ -144,7 +149,17 @@ public class ItemDBImpl implements ItemDB {
             e.printStackTrace();
             return -1;
         }
-
     }
 
+    @Override
+    public long selectItemCount() {
+        try {
+            Query query = new Query();
+            return mongoDB.count(query, Item.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }
