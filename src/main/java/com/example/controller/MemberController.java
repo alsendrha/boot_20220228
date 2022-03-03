@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.entity.Member;
 import com.example.service.MemberDB;
 
@@ -22,6 +24,47 @@ public class MemberController {
     // 클래스명 obj = new 클래스명();
     @Autowired
     private MemberDB memberDB;
+
+    @GetMapping(value = "login")
+    public String loginGET() {
+
+        return "/member/login";
+    }
+
+    @PostMapping(value = "login")
+    public String loginPOST(@ModelAttribute Member member, HttpSession httpsession) {
+        // DB에 아이디, 암호를 전달하여 일치하는 항목 있는지 확인
+        Member retMember = memberDB.selectLogin(member);
+        System.out.println(retMember);
+        if (retMember != null) {
+            // 여기가 로그인 되는 시점!!
+            // 세션 : 서버에 기록되는 정보(어떤 주소, 어떤 컨트롤러에서 공유)
+            httpsession.setAttribute("USERID", retMember.getId());
+            httpsession.setAttribute("USERNAME", retMember.getName());
+            return "redirect:/home";
+
+        }
+        return "redirect:/member/login";
+    }
+
+    @GetMapping(value = "logout")
+    public String logoutGET(HttpSession httpSession) {
+
+        // 세션을 완전히 삭제함.
+        httpSession.invalidate();
+        return "redirect:/home";
+    }
+
+    @GetMapping(value = "mypage")
+    public String mypageGET(HttpSession httpSession) {
+        // 세션에서 정보를 읽음
+        String userid = (String) httpSession.getAttribute("USERID");
+        // 세션에 정보가 없다면(로그인 되지 않은 상태에서 mypage접근)
+        if (userid.isEmpty()) {
+            return "redirect:/member/login";
+        }
+        return "member/mypage";
+    }
 
     @GetMapping(value = "/update") // {} 하나일땐 안써도됨
     public String updateGET(

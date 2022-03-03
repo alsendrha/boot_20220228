@@ -16,7 +16,13 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
 	<dependencies>
+		<!-- mongodb로 세션을 관리하기 위해서 -->
+		<dependency>
+		    <groupId>org.springframework.session</groupId>
+    		<artifactId>spring-session-data-mongodb</artifactId>
+		</dependency>
 
 		<!-- mongodb -->
 		<dependency>

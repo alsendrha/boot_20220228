@@ -82,7 +82,7 @@ public class MemberDBImpl implements MemberDB {
         try {
             // query 조건
             Query query = new Query();
-            Criteria criteria = Criteria.where("_id").is(member.getId()); // 조건 where
+            Criteria criteria = Criteria.where("_id").is(member.getId()); // 조건 where 아이디 찾기
             query.addCriteria(criteria);
 
             // 수정할 항목들
@@ -99,6 +99,26 @@ public class MemberDBImpl implements MemberDB {
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
+        }
+
+    }
+
+    @Override
+    public Member selectLogin(Member member) {
+        try {
+            Query query = new Query();
+            // Criteria criteria = Criteria.where("_id").is(member.getId());
+            // Criteria criteria2 = Criteria.where("pw").is(member.getPw());
+            // query.addCriteria(criteria);
+            // query.addCriteria(criteria2);
+            // 조건 2개 추가 AND
+            query.addCriteria(Criteria.where("_id").is(member.getId()));
+            query.addCriteria(Criteria.where("pw").is(member.getPw()));
+
+            return mongodb.findOne(query, Member.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
 
     }

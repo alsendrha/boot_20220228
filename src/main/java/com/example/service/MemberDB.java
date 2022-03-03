@@ -28,4 +28,7 @@ public interface MemberDB {
 
     // 삭제, 수정, 추가 리턴은 int
 
+    // 로그인(아이디, 암호 전달되면 일치하는 회원정보를 반환)
+    public Member selectLogin(Member member);
+
 }

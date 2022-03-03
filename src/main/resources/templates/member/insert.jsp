@@ -12,9 +12,10 @@
 <body>
     <div style="padding: 20px;">
         <h3>회원가입</h3>
+        <a th:href="@{/}">홈</a>
+        <a th:href="@{/member/selectlist}">회원리스트</a>
         <hr />
-        <a href="/">홈</a>
-        <a href="/member/selectlist">회원리스트</a>
+        
         
         <form th:action="@{/member/insert}" method="post">
             아이디 : <input type="text" name="id"/><br />

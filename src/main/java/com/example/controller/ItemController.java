@@ -49,8 +49,6 @@ public class ItemController {
             @ModelAttribute Item item,
             @RequestParam(name = "image") MultipartFile file)
             throws IOException {
-        System.out.println(item.toString());
-        System.out.println(file.getOriginalFilename());
 
         if (file.isEmpty() == false) {// 첨부됨
             item.setFilename(file.getOriginalFilename());
@@ -114,10 +112,8 @@ public class ItemController {
     @GetMapping(value = "/image")
     public ResponseEntity<byte[]> imageGET(
             @RequestParam(name = "code") long code) {
-        System.out.println(code);
         try {
             Item item = itemDB.selectOneItemImage(code);
-            System.out.println(item.toString());
             if (item.getFilesize() > 0) { // 이미지가 있음
                 HttpHeaders headers = new HttpHeaders();
                 if (item.getFiletype().equals("image/jpeg")) {
