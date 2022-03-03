@@ -56,11 +56,14 @@ public class MemberController {
     }
 
     @GetMapping(value = "mypage")
-    public String mypageGET(HttpSession httpSession) {
+    public String mypageGET(HttpSession httpSession, @RequestParam(name = "menu", defaultValue = "0") int menu) {
+        if (menu == 0) {
+            return "redirect:/member/mypage?menu=1";
+        }
         // 세션에서 정보를 읽음
         String userid = (String) httpSession.getAttribute("USERID");
         // 세션에 정보가 없다면(로그인 되지 않은 상태에서 mypage접근)
-        if (userid.isEmpty()) {
+        if (userid == null) {
             return "redirect:/member/login";
         }
         return "member/mypage";
