@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import com.example.entity.Member;
 import com.example.service.MemberDB;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +23,8 @@ public class MemberController {
     // 클래스명 obj = new 클래스명();
     @Autowired
     private MemberDB memberDB;
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping(value = "login")
     public String loginGET() {
@@ -32,15 +33,15 @@ public class MemberController {
     }
 
     @PostMapping(value = "login")
-    public String loginPOST(@ModelAttribute Member member, HttpSession httpsession) {
+    public String loginPOST(@ModelAttribute Member member) {
         // DB에 아이디, 암호를 전달하여 일치하는 항목 있는지 확인
         Member retMember = memberDB.selectLogin(member);
         System.out.println(retMember);
         if (retMember != null) {
             // 여기가 로그인 되는 시점!!
             // 세션 : 서버에 기록되는 정보(어떤 주소, 어떤 컨트롤러에서 공유)
-            httpsession.setAttribute("USERID", retMember.getId());
-            httpsession.setAttribute("USERNAME", retMember.getName());
+            httpSession.setAttribute("USERID", retMember.getId());
+            httpSession.setAttribute("USERNAME", retMember.getName());
             return "redirect:/home";
 
         }
@@ -48,7 +49,7 @@ public class MemberController {
     }
 
     @GetMapping(value = "logout")
-    public String logoutGET(HttpSession httpSession) {
+    public String logoutGET() {
 
         // 세션을 완전히 삭제함.
         httpSession.invalidate();
@@ -56,7 +57,8 @@ public class MemberController {
     }
 
     @GetMapping(value = "mypage")
-    public String mypageGET(HttpSession httpSession, @RequestParam(name = "menu", defaultValue = "0") int menu) {
+    public String mypageGET(Model model,
+            @RequestParam(name = "menu", defaultValue = "0") int menu) {
         if (menu == 0) {
             return "redirect:/member/mypage?menu=1";
         }
@@ -66,7 +68,60 @@ public class MemberController {
         if (userid == null) {
             return "redirect:/member/login";
         }
+
+        if (menu == 1) { // 정보수정
+            Member member = memberDB.selectOneMember(userid);
+            model.addAttribute("title", "정보수정");
+            model.addAttribute("mem", member);
+        } else if (menu == 2) { // 암호변경
+            model.addAttribute("title", "암호변경");
+
+        } else if (menu == 3) { // 회원탈퇴
+            model.addAttribute("title", "회원탈퇴");
+
+        }
         return "member/mypage";
+    }
+
+    // http://127.0.0.1:8080/member/mypage?menu=1
+    @PostMapping(value = "/mypage")
+    public String mypagePOST(
+            @RequestParam(name = "menu") int menu,
+            @ModelAttribute Member member) {
+
+        if (menu == 1) { // jsp에서 정보수정 버튼
+            int ret = memberDB.updateMember(member);
+            if (ret == 1) {
+                httpSession.setAttribute("USERNAME", member.getName());
+                return "redirect:/member/mypage?menu=1";
+            }
+            return "redirect:/member/mypage?menu=1";
+
+        } else if (menu == 2) {
+            System.out.println(member.toString()); // pw newPw
+            // 아이디는 세션에서 꺼내서 수동으로 추가하기
+            String userid = (String) httpSession.getAttribute("USERID");
+            member.setId(userid);
+
+            long set = memberDB.updateMemberPassword(member);
+            if (set == 1L) {
+                return "redirect:/member/mypage?menu=2";
+
+            }
+            return "redirect:/member/mypage?menu=2";
+
+        } else if (menu == 3) {
+            String userpw = (String) httpSession.getAttribute("USERPW");
+            int ret = memberDB.deleteMember(userpw);
+            if (ret == 1L) {
+                return "redirect:/member/logout";
+
+            }
+            return "redirect:/member/mypage?menu=3";
+
+        }
+        // 비정상적 작업영역
+        return "redrect:/home";
     }
 
     @GetMapping(value = "/update") // {} 하나일땐 안써도됨

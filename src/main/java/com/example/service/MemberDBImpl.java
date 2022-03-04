@@ -98,7 +98,7 @@ public class MemberDBImpl implements MemberDB {
             return 0;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return -1;
         }
 
     }
@@ -119,6 +119,25 @@ public class MemberDBImpl implements MemberDB {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+
+    }
+
+    @Override
+    public long updateMemberPassword(Member member) {
+        try {
+            Query query = new Query();// 조건
+            query.addCriteria(Criteria.where("_id").is(member.getId()));
+            query.addCriteria(Criteria.where("pw").is(member.getPw()));
+
+            Update update = new Update();
+            update.set("pw", member.getNewPw());
+
+            UpdateResult result = mongodb.updateFirst(query, update, Member.class);
+            return result.getModifiedCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1L;
         }
 
     }

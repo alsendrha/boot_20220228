@@ -31,4 +31,7 @@ public interface MemberDB {
     // 로그인(아이디, 암호 전달되면 일치하는 회원정보를 반환)
     public Member selectLogin(Member member);
 
+    // 암호변경
+    public long updateMemberPassword(Member member);
+
 }

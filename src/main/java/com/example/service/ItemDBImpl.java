@@ -49,7 +49,6 @@ public class ItemDBImpl implements ItemDB {
             e.printStackTrace();
             return -1;
         }
-
     }
 
     @Override
@@ -67,7 +66,6 @@ public class ItemDBImpl implements ItemDB {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
@@ -86,7 +84,6 @@ public class ItemDBImpl implements ItemDB {
             e.printStackTrace();
             return 0;
         }
-
     }
 
     @Override
@@ -105,7 +102,6 @@ public class ItemDBImpl implements ItemDB {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
@@ -120,7 +116,6 @@ public class ItemDBImpl implements ItemDB {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
