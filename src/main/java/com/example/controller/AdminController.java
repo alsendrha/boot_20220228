@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.entity.Book;
 import com.example.service.BookDB;
 import com.example.service.SequenceService;
@@ -27,6 +29,9 @@ public class AdminController {
     @Autowired
     SequenceService sequence;
 
+    @Autowired
+    HttpSession httpSession;
+
     @PostMapping(value = "/action")
     public String actionPOST(
             @RequestParam(name = "btn") String btn,
@@ -34,10 +39,14 @@ public class AdminController {
         System.out.println(btn); // 일괄삭제 or 일괄수정
 
         if (btn.equals("일괄삭제")) {
-            // 1) DB에 삭제하기 구현
-            // 2) 회원목록, 물품목록 검색기능 추가하기
-
+            for (int i = 0; i < code.length; i++) {
+                System.out.println(code[i]);
+            }
         } else if (btn.equals("일괄수정")) {
+            httpSession.setAttribute("code", code);
+
+            long[] code1 = (long[]) httpSession.getAttribute("code");
+            return "redirect:/admin/updatebatch";
 
         }
         // 목록으로 이동하기
@@ -84,7 +93,7 @@ public class AdminController {
     @GetMapping(value = "/selectlist")
     public String selectlistGET(
             Model model,
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "text", defaultValue = "") String text) {
 
         // 페이지+검색

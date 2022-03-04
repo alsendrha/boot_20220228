@@ -27,6 +27,7 @@
               <th>버튼</th>
           </tr>
           <tr th:each="tmp, idx : ${list}">
+              <td th:text="${idx.count}"></td>
               <td th:text="${tmp.code}"></td>
               <td th:text="${tmp.name}"></td>
               <td th:text="${tmp.price}"></td>

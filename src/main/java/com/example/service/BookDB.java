@@ -16,4 +16,6 @@ public interface BookDB {
 
     // 페이지네이션용(검색어)
     public long countSearchBook(String text);
+
+    public int deleteBook(long code);
 }

@@ -35,8 +35,8 @@
                     </td>
                 </tr>
             </table>
-                <input type="submit" class=" btn btn-primary" value="도서일괄등록" />
-            </form>
+            <input type="submit" class="btn btn-primary" value="도서일괄등록" />
+        </form>
     </div>
 </body>
 </html>

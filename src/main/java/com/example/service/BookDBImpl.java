@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.example.entity.Book;
+import com.mongodb.client.result.DeleteResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -75,6 +76,26 @@ public class BookDBImpl implements BookDB { // 2. 설계 인터페이스 구현
             query.addCriteria(criteria);
 
             return mongDB.count(query, Book.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+
+        }
+    }
+
+    @Override
+    public int deleteBook(long code) {
+        try {
+            Query query = new Query();
+            Criteria criteria = Criteria.where("_id").is(code);
+            query.addCriteria(criteria);
+
+            DeleteResult result = mongDB.remove(query, Book.class);
+            if (result.getDeletedCount() == 1L) {
+                return 1;
+            }
+            return 0;
 
         } catch (Exception e) {
             e.printStackTrace();
