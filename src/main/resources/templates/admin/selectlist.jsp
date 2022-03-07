@@ -39,6 +39,7 @@
                     <th>저자</th>
                     <th>분류</th>
                     <th>등록일</th>
+                    <th>버튼</th>
                 </tr>
                 <tr th:each="tmp : ${list}">
                     <td><input type="checkbox" name="chk" th:value="${tmp.code}" /> </td>
@@ -48,6 +49,7 @@
                     <td th:text="${tmp.writer}"></td>
                     <td th:text="${tmp.category}"></td>
                     <td th:text="${tmp.regdate}"></td>
+                    <td><a th:href="@{/admin/delete(id=${tmp.code})}">삭제</a></td>
             </tr>
             </table>
         </form>

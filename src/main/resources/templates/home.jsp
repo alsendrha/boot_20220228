@@ -29,6 +29,8 @@
         <a th:href="@{/item/selectlist}">물품목록</a>
         <a th:href="@{/admin/insertbatch}">일괄등록</a>
         <a th:href="@{/admin/selectlist}">도서목록</a>
+        <a th:href="@{/board/insert}">게시물등록</a>
+        <a th:href="@{/board/selectlist}">게시물목록</a>
         
     </div>
     

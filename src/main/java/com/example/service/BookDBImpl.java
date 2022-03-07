@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.entity.Book;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 // 1. 서비스
@@ -85,6 +87,76 @@ public class BookDBImpl implements BookDB { // 2. 설계 인터페이스 구현
     }
 
     @Override
+    public long deleteBatchBook(List<Long> code) {
+        try {
+
+            // long[] => List<long>
+            // code => [2, 5, 3] => collection<Long>
+            Query query = new Query();
+            query.addCriteria(Criteria.where("_id").in(code));
+
+            DeleteResult result = mongDB.remove(query, Book.class);
+            if (result.getDeletedCount() == (long) code.size()) {
+                return 1;
+            }
+            return 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+
+        }
+    }
+
+    @Override
+    public List<Book> selectListWhereIn(List<Long> code) {
+        try {
+            Query query = new Query();
+            query.addCriteria(Criteria.where("_id").in(code));
+
+            // DESC 내림차순, ASC 오름차순
+            Sort sort = Sort.by(Direction.DESC, "_id"); // 내림차순정렬
+            query.with(sort);
+
+            return mongDB.find(query, Book.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
+
+    @Override
+    public long updateBactchBook(List<Book> list) {
+        try {
+            long updateCount = 0;
+            for (Book tmp : list) {
+                Query query = new Query();
+                query.addCriteria(Criteria.where("_id").is(tmp.getCode()));
+
+                Update update = new Update();
+                update.set("title", tmp.getTitle());
+                update.set("price", tmp.getPrice());
+                update.set("writer", tmp.getWriter());
+                update.set("category", tmp.getCategory());
+
+                UpdateResult result = mongDB.updateFirst(query, update, Book.class);
+                updateCount += result.getMatchedCount();
+            }
+            if (updateCount == list.size()) {
+                return 1;
+            }
+            return 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+
+        }
+    }
+
+    @Override
     public int deleteBook(long code) {
         try {
             Query query = new Query();
@@ -96,7 +168,6 @@ public class BookDBImpl implements BookDB { // 2. 설계 인터페이스 구현
                 return 1;
             }
             return 0;
-
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
