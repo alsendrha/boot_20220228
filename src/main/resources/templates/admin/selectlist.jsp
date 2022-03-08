@@ -49,7 +49,7 @@
                     <td th:text="${tmp.writer}"></td>
                     <td th:text="${tmp.category}"></td>
                     <td th:text="${tmp.regdate}"></td>
-                    <td><a th:href="@{/admin/delete(id=${tmp.code})}">삭제</a></td>
+                    <td><a th:href="@{/admin/delete(code=${tmp.code})}">삭제</a></td>
             </tr>
             </table>
         </form>

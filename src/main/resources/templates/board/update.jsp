@@ -12,24 +12,15 @@
 <body>
     <div style="padding: 20px;">
         <h3>게시물수정</h3>
+        <a href="/">홈으로</a>
         <hr />
         <form th:action="@{/board/update}" method="post">
-            <table>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>작성자</th>
-                </tr>
-                <tr>
-                    <td><input type="text" th:value="${board.no}" name="no" readonly></td>
-                    <td><input type="text" th:value="${board.title}" name="title"  ></td>
-                    <td><input type="text" th:value="${board.content}" name="content" ></td>
-                    <td><input type="text" th:value="${board.writer}" name="writer" ></td>
-                </tr>    
-            </table>
-            <hr />
+            <input type="hidden" name="no" th:value="${board.no}" readonly />
+            제목 : <input type="text" th:value="${board.title}" name="title" /><br />
+            내용 : <input type="text" th:value="${board.content}" name="content" /><br />
+            작성자 : <input type="text" th:value="${board.writer}" name="writer" /><br />
             <input type="submit" value="수정하기" />
+            <a th:href="@{/board/selectlist}">글목록</a>
         </form>
     </div>
 </body>
