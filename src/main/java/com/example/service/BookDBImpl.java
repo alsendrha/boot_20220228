@@ -104,7 +104,6 @@ public class BookDBImpl implements BookDB { // 2. 설계 인터페이스 구현
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
-
         }
     }
 
@@ -148,11 +147,9 @@ public class BookDBImpl implements BookDB { // 2. 설계 인터페이스 구현
                 return 1;
             }
             return 0;
-
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
-
         }
     }
 
@@ -171,8 +168,6 @@ public class BookDBImpl implements BookDB { // 2. 설계 인터페이스 구현
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
-
         }
     }
-
 }

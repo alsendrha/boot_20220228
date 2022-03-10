@@ -164,7 +164,7 @@ public class MemberController {
         if (ret == 1) {
             return "redirect:/member/selectlist";
         }
-        return "redirect/member/selectlist";
+        return "redirect:/member/selectlist";
     }
 
     // 127.0.0.1:8080/member/selectlist

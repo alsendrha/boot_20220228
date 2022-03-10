@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.example.entity.Book;
 import com.example.repository.BookRepository;
+import com.example.service.ItemDB;
 import com.example.service.SequenceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class BookController {
     SequenceService sequenceService;
     @Autowired
     HttpSession httpSession;
+    @Autowired
+    ItemDB itemDB;
 
     // insert 추가
     // select 조회
@@ -48,15 +51,13 @@ public class BookController {
 
     @PostMapping(value = "/update")
     public String updatePOST(Model model) {
-        @SuppressWarnings({ "unchecked" })
-        List<Long> code = (List<Long>) httpSession.getAttribute("id");
-        bookRepository.findById(code);
+
         return "/redirect:/book/selectlist";
     }
 
     @GetMapping(value = "/update")
-    public String updateGET(@RequestParam(name = "id") long code) {
-        httpSession.setAttribute("id", code);
+    public String updateGET() {
+
         return "redirect:/book/update";
     }
 

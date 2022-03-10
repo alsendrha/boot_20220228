@@ -98,7 +98,7 @@ public class ItemController {
     }
 
     @GetMapping(value = "/delete")
-    public String deleteGET(@RequestParam(name = "code") long code) {
+    public String deleteGET(@RequestParam(name = "id") long code) {
 
         int result = itemDB.deleteItem(code);
         if (result == 1L) {
