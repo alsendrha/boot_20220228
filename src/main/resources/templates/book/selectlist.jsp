@@ -36,10 +36,10 @@
                         <td th:text="${tmp.regdate}"></td>
                         <td><a th:href="@{/book/delete(id=${tmp.code})}">삭제</a>
                             <a th:href="@{/book/update(id=${tmp.code})}">수정</a>
-                            <!-- <form th:action="@{/book/delete}" method="get">
+                            <form th:action="@{/book/delete}" method="get">
                                 <input type="hidden" name="id" th:value="${tmp.code}"/>
                                 <input type="submit" value="삭제1" />
-                            </form> -->
+                            </form>
                         </td>
                 </tr>
                 

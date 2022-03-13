@@ -14,12 +14,12 @@
         <h3>수정하기</h3>
         <a href="/">홈으로</a>
         <hr />
-        <form th:action="@{/book/update}" method="post">
-            제목 : <input type="text" name="title" /><br />
-            내용 : <input type="text" name="content" /><br />
-            작성자 : <input type="text" name="writer" /><br />
-            가격 : <input type="text" name="price" /><br />
-            <input type="submit" value="책등록" />
+        <form th:action="@{/book/update}" method="Post">
+            <input type="hidden" name="code" th:value="${book.code}" />
+            제목 : <input type="text" th:value="${book.title}" name="title" /><br />
+            가격 : <input type="text" th:value="${book.price}" name="price" /><br />
+            작성자 : <input type="text" th:value="${book.writer}" name="writer" /><br />
+            <input type="submit" value="수정하기" />
         </form>
     </div>
 </body>

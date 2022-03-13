@@ -175,9 +175,9 @@ public class AdminController {
 
         int result = bookDB.deleteBook(code);
         if (result == 1) {
-            return "admin/selectlist";
+            return "redirect:/admin/selectlist";
         }
-        return "admin/selectlist";
+        return "redirect:/admin/selectlist";
     }
 
 }

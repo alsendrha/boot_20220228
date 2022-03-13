@@ -33,6 +33,7 @@
         <a th:href="@{/board/selectlist}">게시물목록</a>
         <a th:href="@{/board/selectfind}">게시물목록2</a>
         <a th:href="@{/book/insert}">책등록</a>
+        <a th:href="@{/book/selectlist}">책목록</a>
         
     </div>
     
